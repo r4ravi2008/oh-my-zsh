@@ -1,5 +1,3 @@
-autoload bashcompinit
-bashcompinit
 # Ifs you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -50,7 +48,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws zsh-autosuggestions git colored-man-pages colorize docker github jira vagrant virtualenv tmux pip python brew osx zsh-syntax-highlighting vi-mode z)
+plugins=(aws zsh-autosuggestions git colored-man colorize docker github jira vagrant virtualenv tmux pip python brew osx zsh-syntax-highlighting vi-mode z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -58,17 +56,12 @@ export GOPATH=$HOME/dev/go
 export PATH="/usr/local/opt/scala@2.11/bin:$PATH"
 export PATH="$HOME/dev/go/bin:$PATH"
 export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
-export PATH=/usr/local/aws/bin:$PATH
-SPARK_HOME=~/dev/sdks/spark-2.3.3-bin-hadoop2.7
+SPARK_HOME=~/dev/sdks/spark-2.2.0-bin-hadoop2.7
 export PATH=$SPARK_HOME/bin:$PATH
 # export PYSPARK_PYTHON=python3
 export PATH="$HOME/.cargo/bin:$PATH"
 TERM=xterm-256color
 export PATH=/usr/local/share/python:$PATH
-# alias mvim='open -a /Applications/MacVim.app'
-#alias mvim='mvim --remote-tab-silent'
-alias vim='mvim'
 EDITOR=vim
 
 
@@ -89,16 +82,3 @@ function r() { grep "$1" ${@:2} -R . }
 function mkcd() { mkdir -p "$@" && cd "$_"; }
 
 alias zshconfig="$EDITOR ~/.zshrc"
-
-function commands() {
-  awk '{a[$4]++}END{for(i in a){print a[i] " " i}}'
-}
-
-alias topten="history | commands | sort -rn | head"
-alias c="clear"
-
-alias sshconfig="$EDITOR ~/.ssh/config" 
-alias k=kubectl
-complete -F __start_kubectl k
-if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
-fpath+=${ZDOTDIR:-~}/.zsh_functions
