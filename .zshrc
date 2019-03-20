@@ -2,7 +2,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/ravi-cdl/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 POWERLEVEL9K_MODE='awesome-patched'
 ZSH_THEME="robbyrussell"
 
@@ -56,7 +56,9 @@ export GOPATH=$HOME/dev/go
 export PATH="/usr/local/opt/scala@2.11/bin:$PATH"
 export PATH="$HOME/dev/go/bin:$PATH"
 export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
-SPARK_HOME=~/dev/sdks/spark-2.2.0-bin-hadoop2.7
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export PATH=/usr/local/aws/bin:$PATH
+SPARK_HOME=~/dev/sdks/spark-2.3.3-bin-hadoop2.7
 export PATH=$SPARK_HOME/bin:$PATH
 # export PYSPARK_PYTHON=python3
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -82,3 +84,9 @@ function r() { grep "$1" ${@:2} -R . }
 function mkcd() { mkdir -p "$@" && cd "$_"; }
 
 alias zshconfig="$EDITOR ~/.zshrc"
+
+function commands() {
+  awk '{a[$4]++}END{for(i in a){print a[i] " " i}}'
+}
+
+alias topten="history | commands | sort -rn | head"
