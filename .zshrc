@@ -64,6 +64,9 @@ export PATH=$SPARK_HOME/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 TERM=xterm-256color
 export PATH=/usr/local/share/python:$PATH
+# alias mvim='open -a /Applications/MacVim.app'
+#alias mvim='mvim --remote-tab-silent'
+alias vim='mvim'
 EDITOR=vim
 
 
@@ -90,3 +93,12 @@ function commands() {
 }
 
 alias topten="history | commands | sort -rn | head"
+alias c="clear"
+
+source ~/.intuit/intuit_init.sh
+
+alias sshconfig="$EDITOR ~/.ssh/config" 
+alias k=kubectl
+complete -F __start_kubectl k
+if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+fpath+=${ZDOTDIR:-~}/.zsh_functions
