@@ -95,8 +95,6 @@ function commands() {
 alias topten="history | commands | sort -rn | head"
 alias c="clear"
 
-source ~/.intuit/intuit_init.sh
-
 alias sshconfig="$EDITOR ~/.ssh/config" 
 alias k=kubectl
 complete -F __start_kubectl k
