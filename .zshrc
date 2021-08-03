@@ -6,6 +6,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 POWERLEVEL9K_MODE='awesome-patched'
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status virtualenv)
 ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -50,7 +51,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws zsh-autosuggestions git colored-man-pages colorize docker github jira vagrant virtualenv tmux pip python brew osx zsh-syntax-highlighting vi-mode z)
+plugins=(aws zsh-autosuggestions git colored-man-pages colorize docker github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting vi-mode z tmux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -58,7 +59,8 @@ export GOPATH=$HOME/dev/go
 export PATH="/usr/local/opt/scala@2.11/bin:$PATH"
 export PATH="$HOME/dev/go/bin:$PATH"
 export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M"
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+# export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-11.jdk/Contents/Home
 export PATH=/usr/local/aws/bin:$PATH
 SPARK_HOME=~/dev/sdks/spark-2.3.3-bin-hadoop2.7
 export PATH=$SPARK_HOME/bin:$PATH
@@ -66,11 +68,12 @@ export PATH=$SPARK_HOME/bin:$PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 TERM=xterm-256color
 export PATH=/usr/local/share/python:$PATH
-# alias mvim='open -a /Applications/MacVim.app'
-#alias mvim='mvim --remote-tab-silent'
-alias vim='mvim'
-EDITOR=vim
-
+export PATH="$HOME/Library/Python/3.7/bin:$PATH"
+export PATH="/Library/TeX/texbin/:$PATH"
+export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="$HOME/dev/binaries/polynote:$PATH"
+export PATH="$HOME/dev/repos/remacs/src:$PATH"
+EDITOR=nvim
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -96,9 +99,23 @@ function commands() {
 
 alias topten="history | commands | sort -rn | head"
 alias c="clear"
+alias ripgrep="rg"
 
 alias sshconfig="$EDITOR ~/.ssh/config" 
 alias k=kubectl
 complete -F __start_kubectl k
 if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+
+source ~/.intuit/intuit.sh
+
+# fzf stuff
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export VIRTUAL_ENV_DISABLE_PROMPT=
+
+source /Users/rkommineni/Library/Preferences/org.dystroy.broot/launcher/bash/br
+
+bindkey '^g' tmux-pane-words-prefix
+bindkey '^j' tmux-pane-words-anywhere
+export PATH="/usr/local/opt/awscli@1/bin:$PATH"
