@@ -50,16 +50,13 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws zsh-autosuggestions git colored-man-pages colorize docker github jira vagrant virtualenv tmux pip python brew osx zsh-syntax-highlighting vi-mode z)
+plugins=(aws zsh-autosuggestions git colored-man-pages colorize docker github jira vagrant virtualenv tmux pip python brew zsh-syntax-highlighting vi-mode z)
 
 source $ZSH/oh-my-zsh.sh
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 11)
-export PATH=/usr/local/aws/bin:$PATH
 TERM=xterm-256color
-export PATH=/usr/local/share/python:$PATH
 export PATH=~/.emacs.d/bin:$PATH
-EDITOR=vim
+EDITOR=nvim
 
 # Used to cd ls everytime directories are changed
 function chpwd() {
@@ -75,6 +72,13 @@ function f() { find . -iname "*$1*" ${@:2} }
 function r() { grep "$1" ${@:2} -R . }
 function mkcd() { mkdir -p "$@" && cd "$_"; }
 
+# Source a file if it exists
+function source_if_exists() {
+    if [ -f "$1" ]; then
+        source "$1"
+    fi
+}
+
 alias zshconfig="$EDITOR ~/.zshrc"
 
 function commands() {
@@ -85,20 +89,14 @@ alias topten="history | commands | sort -rn | head"
 alias c="clear"
 
 alias sshconfig="$EDITOR ~/.ssh/config" 
-alias k=kubectl
-complete -F __start_kubectl k
-if [ /usr/local/bin/kubectl ]; then source <(kubectl completion zsh); fi
+
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-alias k=kubectl
-complete -F __start_kubectl k
 
-source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
 
-eval "$(pyenv init -)"
+source_if_exists ~/.config/.api_keys
